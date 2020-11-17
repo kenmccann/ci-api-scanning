@@ -1,4 +1,5 @@
 # Starter pipeline
+
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
@@ -19,36 +20,8 @@ steps:
     repository: '$(imageName)'
     command: 'buildAndPush'
     Dockerfile: 'Dockerfile'
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-    echo curl + `which curl`
-    #!/bin/bash
-    # 
-    # scan-new-image.sh 
-    # 
-    # Prerequisites:
-    #   AQUA_USER - set in CI/CD bindings
-    #   AQUA_PASS - set in CI/CD bindings  
-    #
-    # Input Parameters:
-    #   $AQUA_URL: URL
-    #   $AQUA_REG: Aqua Registry Name
-    #   $IMAGE_REPO: Repository Name
-    #   $IMAGE_TAG: Image Tag
-    #
-    curl -s -k -u $AQUA_USER:$AQUA_PASS -X POST -H 'Content-Type:application/json' $AQUA_URL/api/v1/images --data @<(cat <<EOF
-    {
-      "images": [
-        {
-          "registry": "$AQUA_REG",
-          "repository": "$IMAGE_REPO",
-          "tag": "$IMAGE_TAG",
-          "digest": null,
-          "source": null
-        }
-      ]
-    }
-    EOF
-    )
+- task: Bash@3
+  inputs:
+    filePath: 'scan-new-image.sh'
+    arguments: 'http://34.75.241.250:8080 ACR aqua-alpine latest'
   displayName: 'Scan an image using the Aqua API.'
