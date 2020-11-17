@@ -23,5 +23,12 @@ steps:
 - task: Bash@3
   inputs:
     filePath: 'scan-new-image.sh'
-    arguments: 'http://34.75.241.250:8080 ACR aqua-alpine latest'
+    arguments: 'http://34.75.241.250:8080 ACR aqua-alpine:$(Build.BuildId)'
   displayName: 'Scan an image using the Aqua API.'
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: |
+      # Write your commands here
+      
+      which jq 
