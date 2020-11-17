@@ -1,3 +1,3 @@
-FROM alpine:latest
+FROM nginx:alpine 
 
 RUN echo hello
