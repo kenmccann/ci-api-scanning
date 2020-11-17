@@ -1,3 +1,3 @@
-FROM nginx:alpine 
+FROM nginx:1.17.1-alpine
 
 RUN echo hello
