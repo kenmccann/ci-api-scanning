@@ -37,7 +37,6 @@ steps:
     #   $IMAGE_REPO: Repository Name
     #   $IMAGE_TAG: Image Tag
     #
-    
     curl -s -k -u $AQUA_USER:$AQUA_PASS -X POST -H 'Content-Type:application/json' $AQUA_URL/api/v1/images --data @<(cat <<EOF
     {
       "images": [
