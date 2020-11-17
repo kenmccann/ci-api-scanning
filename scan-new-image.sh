@@ -12,7 +12,7 @@
 #   3: image:tag
 #
 
-curl -vvv "$1/api/v2/images" \
+curl "$1/api/v2/images" \
   -u $AQUA_USER:$AQUA_PASS \
   -H 'Content-Type:application/json' \
   --data-binary '{"registry": "ACR","image": "'"$3"'"}' 
