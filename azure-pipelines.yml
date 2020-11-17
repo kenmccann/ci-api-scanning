@@ -9,10 +9,16 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+variables:
+  imageName: 'aqua-alpine'
 
+steps:
+- task: Docker@2
+  inputs:
+    containerRegistry: 'aquaken'
+    repository: '$(imageName)'
+    command: 'buildAndPush'
+    Dockerfile: 'Dockerfile'
 - script: |
     echo Add other tasks to build, test, and deploy your project.
     echo See https://aka.ms/yaml
@@ -46,4 +52,4 @@ steps:
     }
     EOF
     )
-  displayName: 'Run a multi-line script'
+  displayName: 'Scan an image using the Aqua API.'
