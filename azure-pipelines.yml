@@ -27,8 +27,6 @@ steps:
   displayName: 'Scan an image using the Aqua API.'
 - task: Bash@3
   inputs:
-    targetType: 'inline'
-    script: |
-      # Write your commands here
-      
-      which jq 
+    filePath: 'scan-check-queue-status.sh'
+    arguments: 'http://34.75.241.250:8080 ACR aqua-alpine:$(Build.BuildId)'
+  displayName: 'Check and poll for scan result.'
