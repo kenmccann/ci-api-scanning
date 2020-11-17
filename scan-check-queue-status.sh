@@ -10,8 +10,7 @@
 # Input Parameters:
 #   1: URL
 #   2: Aqua Registry Name
-#   3: Repository Name
-#   4: Image Tag
+#   3: image:tag
 
 # Set these to binary locations on your build host
 JQ=jq
@@ -26,7 +25,7 @@ COUNT=0
 
 while [ "$SCANNING" = true ]; do
 
-  SCANNING_STATUS=$($CURL -s -k -u $AQUA_USER:$AQUA_PASS -X GET $1/api/v1/scanner/registry/$2/image/$3:$4/status | $JQ -r .status | sed ':a;N;$!ba;s/\n/ /g')
+  SCANNING_STATUS=$($CURL -s -k -u $AQUA_USER:$AQUA_PASS -X GET $1/api/v1/scanner/registry/$2/image/$3/status | $JQ -r .status | sed ':a;N;$!ba;s/\n/ /g')
   ((COUNT=COUNT+1))
   sleep 1
   echo $(date +"%H:%M:%S") Scanning status is ${SCANNING_STATUS}.
@@ -35,14 +34,14 @@ while [ "$SCANNING" = true ]; do
    then
    SCANNING='false'
    echo "Scanning finished."
-   DISALLOWED=$($CURL -s -k -u $AQUA_USER:$AQUA_PASS -X GET $1/api/v1/scanner/registry/$2/image/$3:$4/scan_result | $JQ -r .disallowed | sed ':a;N;$!ba;s/\n/ /g')
+   DISALLOWED=$($CURL -s -k -u $AQUA_USER:$AQUA_PASS -X GET $1/api/v1/scanner/registry/$2/image/$3/scan_result | $JQ -r .disallowed | sed ':a;N;$!ba;s/\n/ /g')
    if [ "$DISALLOWED" = false  ];
     then
     echo "Image is ALLOWED."
     exit 0
    else
     echo "Image is DISALLOWED."
-    DISALLOW_REASON=$($CURL -s -k -u $AQUA_USER:$AQUA_PASS -X GET $1/api/v1/scanner/registry/$2/image/$3:$4/scan_result | $JQ -r .disallow_reason | sed ':a;N;$!ba;s/\n/ /g')
+    DISALLOW_REASON=$($CURL -s -k -u $AQUA_USER:$AQUA_PASS -X GET $1/api/v1/scanner/registry/$2/image/$3/scan_result | $JQ -r .disallow_reason | sed ':a;N;$!ba;s/\n/ /g')
     echo "Disallow reason: $DISALLOW_REASON"
     exit 1
    fi
