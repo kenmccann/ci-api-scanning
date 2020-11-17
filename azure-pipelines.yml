@@ -11,7 +11,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  imageName: 'aqua-alpine'
+  imageName: 'nginx-alpine'
 
 steps:
 - task: Docker@2
@@ -23,10 +23,10 @@ steps:
 - task: Bash@3
   inputs:
     filePath: 'scan-new-image.sh'
-    arguments: 'http://34.75.241.250:8080 ACR aqua-alpine:$(Build.BuildId)'
+    arguments: 'http://34.75.241.250:8080 ACR nginx-alpine:$(Build.BuildId)'
   displayName: 'Scan an image using the Aqua API.'
 - task: Bash@3
   inputs:
     filePath: 'scan-check-queue-status.sh'
-    arguments: 'http://34.75.241.250:8080 ACR aqua-alpine:$(Build.BuildId)'
+    arguments: 'http://34.75.241.250:8080 ACR nginx-alpine:$(Build.BuildId)'
   displayName: 'Check and poll for scan result.'
