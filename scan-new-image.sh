@@ -13,6 +13,10 @@
 #   4: Image Tag
 #
 
+#DEBUG
+echo AQUA USER: $AQUA_USER
+echo AQUA PASS: $AQUA_PASS
+
 curl -s -k -u $AQUA_USER:$AQUA_PASS -X POST -H 'Content-Type:application/json' $1/api/v1/images --data @<(cat <<EOF
 {
   "images": [
